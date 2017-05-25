@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>My text counter example</title>
+  </head>
+  <body>
+    <div id="app">
+      <!-- my app reanders here -->
+    </div>
+    <script src="react/build/react.js" ></script>
+    <script src="react/build/react-dom.js" ></script>
+    <script>
+      // my apps code
+      var TextAreaCounter = React.createClass({
+        propTypes: {
+          text: React.PropTypes.string,
+        },
+
+        getDefaultProptypes: function () {
+          return {
+            text: '',
+          };
+        },
+
+        render: function () {
+          return React.DOM.div(null,
+            React.DOM.textarea({
+              defaultValue: this.props.text,
+            }),
+            React.DOM.h3(null, this.props.text.length)
+          );
+        }
+
+      });
+
+      ReactDOM.render (
+        React.createElement(TextAreaCounter, {
+          text: "Bob",
+        }),
+        document.getElementById('app')
+      );
+    </script>
+
+  </body>
+</html>
