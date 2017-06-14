@@ -5,7 +5,7 @@ module.exports = {
         "es6": true,
         "node": true
     },
-    "extends": "eslint:recommended",
+    "extends": ["eslint:recommended"],
     "parserOptions": {
         "ecmaFeatures": {
             "experimentalObjectRestSpread": true,
@@ -13,8 +13,13 @@ module.exports = {
         },
         "sourceType": "module"
     },
+    "globals": {
+        "React": true,
+        "ReactDOM": true,
+    },
     "plugins": [
-        "react"
+        "react",
+        "html"
     ],
     "rules": {
         "indent": [

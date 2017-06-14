@@ -11,7 +11,7 @@
     <script src="react/build/react-with-addons.js" ></script>
     <script src="react/build/react-dom.js" ></script>
     <script>
-      // my apps code
+      // my apps code  
       var logMixin = {
         _log: function (methodName, args) {
           console.log(this.name + '::' + methodName, args);
@@ -96,7 +96,7 @@
 
       var myTextAreaCounter = ReactDOM.render (
         React.createElement(TextAreaCounter, {
-          text: "Bob",
+          text: 'Bob',
         }),
         document.getElementById('app')
       );
