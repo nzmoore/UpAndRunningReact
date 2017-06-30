@@ -29,6 +29,8 @@
       var MyBookList = React.createClass({
         displayName: 'MyBookList',
 
+        _preSearchData: null,
+
         propTypes:{
           headers: React.PropTypes.arrayOf(
             React.PropTypes.string
@@ -84,6 +86,34 @@
           });
         },
 
+        _toggleSearch: function () {
+          if (this.state.search) {
+            this.setState({
+              data: this._preSearchData,
+              search: false,
+            });
+            this._preSearchData = null;
+          } else {
+            this._preSearchData = this.state.data;
+            this.setState({
+              search: true,
+            });
+          }
+        },
+
+        _search: function (e) {
+          var needle = e.target.value.toLowerCase();
+          if (!needle) { // the searc string is deleted
+            this.setState({data: this._preSearchData});
+            return;
+          }
+          var idx = e.target.dataset.idx; //which column to search
+          var searchdata = this._preSearchData.filter(function (row) {
+            return row[idx].toString().toLowerCase().indexOf(needle) > -1;
+          });
+          this.setState({data: searchdata});
+        },
+
         _renderTable: function () {
           return ( React.DOM.table(null,
             React.DOM.thead({onClick: this._sort},
@@ -98,6 +128,7 @@
               )
             ),
             React.DOM.tbody({onDoubleClick: this._showEditor},
+              this._renderSearch(),
               this.state.data.map(function(row, rowidx) {
                 return (
                   React.DOM.tr({key: rowidx},
@@ -125,13 +156,43 @@
           );
   },
 
+  _renderToolbar: function () {
+    return React.DOM.button({
+            onClick: this._toggleSearch,
+            className: 'toolbar'
+
+    },
+    'search'
+    );
+  },
+
+  _renderSearch: function () {
+    if (!this.state.search) {
+            return null;
+    }
+    return (
+            React.DOM.tr({onChange: this._search},
+              this.props.headers.map( function(_ignore, idx) {
+                return React.DOM.td({key: idx},
+                  React.DOM.input({
+                    type: 'text',
+                    'data-idx': idx,
+                  })
+                );
+              })
+            )
+    );
+  },
+
   render: function () {
     return (
             React.DOM.div(null,
+              this._renderToolbar(),
               this._renderTable()
             )
     );
   },
+
 });
 
       ReactDOM.render(
