@@ -35,7 +35,7 @@ module.exports = {
             "single"
         ],
         "semi": [
-            "error",
+            "warn",
             "always"
         ],
         "no-unused-vars": [
