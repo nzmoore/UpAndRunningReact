@@ -1,0 +1,8 @@
+node_modules/
+react/
+babel/
+build/
+deployment/
+bundle.css
+bundle.js
+discover-bundle.js

@@ -2,7 +2,7 @@ import React from 'react';
 
 var Excel = React.createClass({
   displayName: 'Excel',
-  
+
   propTypes: {
     headers: React.PropTypes.arrayOf(
       React.PropTypes.string
@@ -23,13 +23,13 @@ var Excel = React.createClass({
       search: false,
     };
   },
-  
+
   _sort: function(e) {
     var column = e.target.cellIndex;
     var data = this.state.data.slice();
     var descending = this.state.sortby === column && !this.state.descending;
     data.sort(function(a, b) {
-      return descending 
+      return descending
         ? a[column] < b[column]
         : a[column] > b[column];
     });
@@ -39,14 +39,14 @@ var Excel = React.createClass({
       descending: descending,
     });
   },
-  
+
   _showEditor: function(e) {
     this.setState({edit: {
       row: parseInt(e.target.dataset.row, 10),
       cell: e.target.cellIndex,
     }});
   },
-  
+
   _save: function(e) {
     e.preventDefault();
     var input = e.target.firstChild;
@@ -57,9 +57,9 @@ var Excel = React.createClass({
       data: data,
     });
   },
-  
+
   _preSearchData: null,
-  
+
   _toggleSearch: function() {
     if (this.state.search) {
       this.setState({
@@ -74,7 +74,7 @@ var Excel = React.createClass({
       });
     }
   },
-  
+
   _search: function(e) {
     var needle = e.target.value.toLowerCase();
     if (!needle) {
@@ -87,15 +87,15 @@ var Excel = React.createClass({
     });
     this.setState({data: searchdata});
   },
-  
+
   _download: function (format, ev) {
     var contents = format === 'json'
       ? JSON.stringify(this.state.data)
       : this.state.data.reduce(function(result, row) {
           return result
             + row.reduce(function(rowresult, cell, idx) {
-                return rowresult 
-                  + '"' 
+                return rowresult
+                  + '"'
                   + cell.replace(/"/g, '""')
                   + '"'
                   + (idx < row.length - 1 ? ',' : '');
@@ -108,7 +108,7 @@ var Excel = React.createClass({
     ev.target.href = URL.createObjectURL(blob);
     ev.target.download = 'data.' + format;
   },
-  
+
   render: function() {
     return (
       <div className="Excel">
@@ -117,19 +117,19 @@ var Excel = React.createClass({
       </div>
     );
   },
-  
+
   _renderToolbar: function() {
     return (
       <div className="toolbar">
         <button onClick={this._toggleSearch}>Search</button>
-        <a onClick={this._download.bind(this, 'json')} 
+        <a onClick={this._download.bind(this, 'json')}
           href="data.json">Export JSON</a>
-        <a onClick={this._download.bind(this, 'csv')} 
+        <a onClick={this._download.bind(this, 'csv')}
           href="data.csv">Export CSV</a>
       </div>
     );
   },
-  
+
   _renderSearch: function() {
     if (!this.state.search) {
       return null;
@@ -142,7 +142,7 @@ var Excel = React.createClass({
       </tr>
     );
   },
-  
+
   _renderTable: function() {
     return (
       <table>
@@ -182,4 +182,4 @@ var Excel = React.createClass({
   }
 });
 
-export default Excel
+export default Excel;

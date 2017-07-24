@@ -12,4 +12,4 @@ Button.PropTypes = {
   href: PropTypes.string,
 };
 
-export default Button
+export default Button;
